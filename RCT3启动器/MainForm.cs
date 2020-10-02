@@ -12,6 +12,12 @@ namespace RCT3启动器
 {
 	public partial class MainForm : Form
 	{
+#if New_Game_Version
+		string Game_Exe_Name = "RCT3.exe";
+#else
+        string Game_Exe_Name = "RCT3plus.exe";
+#endif
+
 		private Form form;//全局窗体变量
 		bool Setting_Open = false;//判断设置窗口是否打开的变量
 		bool Button_Up = false;//判断按钮是否被放开的变量
@@ -105,37 +111,37 @@ namespace RCT3启动器
 				XmlNodeList Settings = Set.ChildNodes;
 				foreach (XmlNode S in Settings)
 				{
-					if (S.Attributes["id"].InnerText == "启动器设置")
+					if (S.Attributes["id"].InnerText == "0")
 					{
 						XmlNodeList QSettings = S.ChildNodes;
 						foreach (XmlNode AD in QSettings)
 						{
-							if (AD.Attributes["id"].InnerText == "允许启动器在游戏启动期间驻留在后台")
+							if (AD.Attributes["id"].InnerText == "1")
 							{
 								if (AD.InnerText == "True")
 									Value.Started_Run = true;
 								else
 									Value.Started_Run = false;
 							}
-							if (AD.Attributes["id"].InnerText == "允许启动器收集您的配置信息以供分析")
+							if (AD.Attributes["id"].InnerText == "2")
 							{
 								//不想写了
 							}
-							if (AD.Attributes["id"].InnerText == "启动器对低配置系统优化")
+							if (AD.Attributes["id"].InnerText == "3")
 							{
 								if (AD.InnerText == "True")
 									Value.optimize = true;
 								else
 									Value.optimize = false;
 							}
-							if (AD.Attributes["id"].InnerText == "自动检查更新")
+							if (AD.Attributes["id"].InnerText == "4")
 							{
 								if (AD.InnerText == "True")
 									Value.Auto_Check_Update = true;
 								else
 									Value.Auto_Check_Update = false;
 							}
-							if (AD.Attributes["id"].InnerText == "游戏目录")
+							if (AD.Attributes["id"].InnerText == "5")
 							{
 								if (!(AD.InnerText == ""))
 									Value.Game_Address = AD.InnerText;
@@ -144,24 +150,24 @@ namespace RCT3启动器
 							}
 						}
 					}
-					if (S.Attributes["id"].InnerText == "画面设置")
+					if (S.Attributes["id"].InnerText == "6")
 					{
 						string GSettings = null;
 						foreach (XmlNode AD in S)
 						{
 							GSettings += AD.Attributes["id"].InnerText;
 						}
-						if (!GSettings.Contains("开启SweetFX"))
+						if (!GSettings.Contains("9"))
 						{
 							XmlElement S8 = Setting.CreateElement("开启SweetFX");
-							S8.SetAttribute("id", "开启SweetFX");
+							S8.SetAttribute("id", "9");
 							S8.InnerText = "False";
 							S.AppendChild(S8);
 						}
-						if (!GSettings.Contains("轨道重叠"))
+						if (!GSettings.Contains("10"))
 						{
 							XmlElement S9 = Setting.CreateElement("轨道重叠");
-							S9.SetAttribute("id", "轨道重叠");
+							S9.SetAttribute("id", "10");
 							S9.InnerText = "False";
 							S.AppendChild(S9);
 						}
@@ -299,7 +305,7 @@ namespace RCT3启动器
 				if (!(Value.Game_Address == ""))
 				{
 					Process RCT3S = new Process();
-					RCT3S.StartInfo.FileName = Value.Game_Address + "//RCT3plus.exe";
+					RCT3S.StartInfo.FileName = Value.Game_Address + "//" + Game_Exe_Name;
 					RCT3S.Start();
 					if (Value.Started_Run == false)
 						this.Close();

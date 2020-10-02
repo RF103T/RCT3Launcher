@@ -503,7 +503,6 @@
 			this.dither_method_1 = new System.Windows.Forms.RadioButton();
 			this.label105 = new System.Windows.Forms.Label();
 			this.UpdateButton = new System.Windows.Forms.Button();
-			this.label7 = new System.Windows.Forms.Label();
 			this.UpdateNews = new System.Windows.Forms.TextBox();
 			this.QUpdate_Box = new System.Windows.Forms.Panel();
 			this.About_Box = new System.Windows.Forms.Panel();
@@ -6913,16 +6912,6 @@
 			this.UpdateButton.Text = "更新";
 			this.UpdateButton.UseVisualStyleBackColor = false;
 			// 
-			// label7
-			// 
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(551, 521);
-			this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(138, 15);
-			this.label7.TabIndex = 26;
-			this.label7.Text = "目前版本：1.0.0.0\r\n";
-			// 
 			// UpdateNews
 			// 
 			this.UpdateNews.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
@@ -6938,7 +6927,6 @@
 			// 
 			// QUpdate_Box
 			// 
-			this.QUpdate_Box.Controls.Add(this.label7);
 			this.QUpdate_Box.Controls.Add(this.UpdateButton);
 			this.QUpdate_Box.Controls.Add(this.UpdateNews);
 			this.QUpdate_Box.Location = new System.Drawing.Point(359, 79);
@@ -6967,9 +6955,9 @@
 			this.label8.Location = new System.Drawing.Point(352, 54);
 			this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(67, 20);
+			this.label8.Size = new System.Drawing.Size(252, 20);
 			this.label8.TabIndex = 27;
-			this.label8.Text = "V1.0.0.0";
+			this.label8.Text = "V1.1.0.0（For Complete Edition）";
 			// 
 			// label9
 			// 
@@ -7330,7 +7318,6 @@
         private System.Windows.Forms.Panel FXSetting_Box;
         private System.Windows.Forms.Panel QUpdate_Box;
         private System.Windows.Forms.Panel About_Box;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
