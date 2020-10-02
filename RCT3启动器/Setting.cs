@@ -20,7 +20,7 @@ namespace RCT3启动器
         string Game_Options_Path = "//Frontier//RCT3//Options.txt";
         string Game_Exe_Name = "RCT3.exe";
 #else
-        string Game_Options_Path = Game_Options_Path;
+        string Game_Options_Path = "//Atari//RCT3//Options.txt";
         string Game_Exe_Name = "RCT3plus.exe";
 #endif
 
