@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCT3启动器", ".\RCT3启动器\RCT3启动器.csproj", "{CA630F4C-547F-429C-9DA4-858BA23213D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCT3启动器MessageBox", ".\RCT3启动器MessageBox\RCT3启动器MessageBox.csproj", "{9737F96C-04D1-481B-A0B8-A603236EA4B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win8 ONOff", ".\Win8 ON\Win8 ONOff.csproj", "{20C83598-E0D1-43F1-A271-FE440EF6882E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA630F4C-547F-429C-9DA4-858BA23213D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA630F4C-547F-429C-9DA4-858BA23213D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA630F4C-547F-429C-9DA4-858BA23213D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA630F4C-547F-429C-9DA4-858BA23213D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9737F96C-04D1-481B-A0B8-A603236EA4B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9737F96C-04D1-481B-A0B8-A603236EA4B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9737F96C-04D1-481B-A0B8-A603236EA4B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9737F96C-04D1-481B-A0B8-A603236EA4B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20C83598-E0D1-43F1-A271-FE440EF6882E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20C83598-E0D1-43F1-A271-FE440EF6882E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20C83598-E0D1-43F1-A271-FE440EF6882E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20C83598-E0D1-43F1-A271-FE440EF6882E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5A2C1FFD-287E-4AA1-9BE0-DD24D9BC01E6}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+EndGlobal

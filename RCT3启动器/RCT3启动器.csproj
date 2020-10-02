@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CA630F4C-547F-429C-9DA4-858BA23213D0}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RCT3启动器</RootNamespace>
+    <AssemblyName>RCT3启动器</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>K:\程序工作\RCT3启动器（.NET 3.5）\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>false</MapFileExtensions>
+    <ProductName>RCT3启动器</ProductName>
+    <PublisherName>jiji13512351</PublisherName>
+    <SuiteName>RCT3启动器</SuiteName>
+    <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.0</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>1</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>RCT3plus.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>EC50EB9C394066A51C749C158A6E71F530565763</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>RCT3启动器_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="RCT3启动器MessageBox, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RCT3启动器MessageBox\RCT3启动器MessageBox\bin\Debug\RCT3启动器MessageBox.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Win8 ON, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Win8 ON\Win8 ON\bin\Debug\Win8 ON.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GameFixForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameFixForm.Designer.cs">
+      <DependentUpon>GameFixForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Setting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setting.Designer.cs">
+      <DependentUpon>Setting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SweetFX.cs" />
+    <EmbeddedResource Include="GameFixForm.resx">
+      <DependentUpon>GameFixForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setting.resx">
+      <DependentUpon>Setting.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="RCT3启动器_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AdvancedCRT.h" />
+    <EmbeddedResource Include="Resources\Bloom.h" />
+    <EmbeddedResource Include="Resources\Border.h" />
+    <EmbeddedResource Include="Resources\Cartoon.h" />
+    <EmbeddedResource Include="Resources\Curves.h" />
+    <EmbeddedResource Include="Resources\Custom.h" />
+    <EmbeddedResource Include="Resources\d3d9.fx" />
+    <EmbeddedResource Include="Resources\Dither.h" />
+    <EmbeddedResource Include="Resources\DPX.h" />
+    <EmbeddedResource Include="Resources\dxgi.fx" />
+    <EmbeddedResource Include="Resources\Explosion.h" />
+    <EmbeddedResource Include="Resources\Fxaa3_11.h" />
+    <EmbeddedResource Include="Resources\HDR.h" />
+    <EmbeddedResource Include="Resources\injector.ini" />
+    <EmbeddedResource Include="Resources\Levels.h" />
+    <EmbeddedResource Include="Resources\LiftGammaGain.h" />
+    <EmbeddedResource Include="Resources\log.log" />
+    <EmbeddedResource Include="Resources\LumaSharpen.h" />
+    <EmbeddedResource Include="Resources\Main.h" />
+    <EmbeddedResource Include="Resources\Monochrome.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Sepia.h" />
+    <EmbeddedResource Include="Resources\shader.fx" />
+    <EmbeddedResource Include="Resources\SMAA.h" />
+    <EmbeddedResource Include="Resources\Splitscreen.h" />
+    <EmbeddedResource Include="Resources\SweetCRT.h" />
+    <EmbeddedResource Include="Resources\Technicolor.h" />
+    <EmbeddedResource Include="Resources\Tonemap.h" />
+    <EmbeddedResource Include="Resources\Vibrance.h" />
+    <EmbeddedResource Include="Resources\Vignette.h" />
+    <None Include="Resources\设置背景.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\设置鼠标锁定.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\设置选中项.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Interop0IWshRuntimeLibrary.dll" />
+    <EmbeddedResource Include="Resources\Update.exe" />
+    <None Include="bin\Debug\Interop.IWshRuntimeLibrary.dll" />
+    <None Include="bin\Debug\Update.exe" />
+    <None Include="Resources\RCT3Live.png" />
+    <None Include="Resources\退出.png" />
+    <None Include="Resources\添加音乐.png" />
+    <None Include="Resources\添加扩充.png" />
+    <None Include="Resources\启动器设置.png" />
+    <None Include="Resources\启动.png" />
+    <None Include="Resources\画面设置.png" />
+    <None Include="Resources\访问.png" />
+    <None Include="Resources\存档修复.png" />
+    <None Include="Resources\RCTLIVE.png" />
+    <EmbeddedResource Include="Resources\dxgiSMAA.dll" />
+    <EmbeddedResource Include="Resources\d3d9SMAA.dll" />
+    <EmbeddedResource Include="Resources\d3d9FXAA.dll" />
+    <EmbeddedResource Include="Resources\Black_Mesa_CeeJay.txt" />
+    <EmbeddedResource Include="Resources\Battlefield 3_Derko1.txt" />
+    <EmbeddedResource Include="Resources\Torchlight2_TFL.txt" />
+    <EmbeddedResource Include="Resources\Torchlight2_BetA.txt" />
+    <EmbeddedResource Include="Resources\Mount&amp;Blade_Warband_TFL.txt" />
+    <EmbeddedResource Include="Resources\Default_1.5_settings.txt" />
+    <EmbeddedResource Include="Resources\SweetFX_compatibility_settings.txt" />
+    <EmbeddedResource Include="Resources\Making shaders.txt" />
+    <EmbeddedResource Include="Resources\Game_compability.txt" />
+    <EmbeddedResource Include="Resources\SweetFX_settings.txt" />
+    <EmbeddedResource Include="Resources\SweetFX_preset.txt" />
+    <EmbeddedResource Include="Resources\SweetFX readme.txt" />
+    <EmbeddedResource Include="Resources\dxgi.dll" />
+    <EmbeddedResource Include="Resources\d3d9.dll" />
+    <None Include="Resources\添加扩充鼠标锁定磁贴1.png" />
+    <None Include="Resources\添加扩充普通磁贴1.png" />
+    <None Include="Resources\鼠标锁定磁贴.png" />
+    <None Include="Resources\启动游戏鼠标锁定磁贴1.png" />
+    <None Include="Resources\启动游戏普通磁贴1.png" />
+    <None Include="Resources\打开贴吧鼠标锁定磁贴1.png" />
+    <None Include="Resources\打开贴吧普通磁贴1.png" />
+    <None Include="Resources\普通磁贴.png" />
+    <None Include="Resources\background.png" />
+    <None Include="Resources\添加扩充鼠标锁定磁贴.png" />
+    <None Include="Resources\添加扩充普通磁贴.png" />
+    <None Include="Resources\鼠标锁定磁贴1.png" />
+    <None Include="Resources\普通磁贴1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="RCT3plus.ico" />
+    <EmbeddedResource Include="Resources\4gb_patch.exe" />
+    <EmbeddedResource Include="Resources\RCT3plus.exe" />
+    <EmbeddedResource Include="Resources\RCT3启动器MessageBox.dll" />
+    <EmbeddedResource Include="Resources\Win8 ON.dll" />
+    <None Include="Resources\RCT3plus.png" />
+    <None Include="Resources\RCT3plus.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="RCT3启动器MessageBox">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="Win8 ON">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Exclude</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
