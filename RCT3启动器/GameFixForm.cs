@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
-using System.Threading;
 using System.IO;
 using System.Diagnostics;
 using System.Reflection;
@@ -45,11 +39,13 @@ namespace RCT3启动器
                 this.Close();
         }
 
+        //检测文本框竖向滚动条是否拉到最下面
         private void Form_MouseEnter(object sender, EventArgs e)
         {
             CheckScroll.Start();
-        }//检测文本框竖向滚动条是否拉到最下面
+        }
 
+        //检测文本框竖向滚动条是否拉到最下面
         private void CheckScroll_Tick(object sender, EventArgs e)
         {
             if (GetScrollPos(this.Tips.Handle, 1) == 9)
@@ -57,7 +53,7 @@ namespace RCT3启动器
                 StartGuide.Visible = true;
                 CheckScroll.Stop();
             }
-        }//检测文本框竖向滚动条是否拉到最下面
+        }
 
         private void StartGuide_Click(object sender, EventArgs e)
         {

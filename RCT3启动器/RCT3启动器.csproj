@@ -80,9 +80,9 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="RCT3启动器MessageBox, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="RCT3启动器MessageBox, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\RCT3启动器MessageBox\RCT3启动器MessageBox\bin\Debug\RCT3启动器MessageBox.dll</HintPath>
+      <HintPath>..\RCT3启动器MessageBox\bin\Release\RCT3启动器MessageBox.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -95,7 +95,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="Win8 ON, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Win8 ON\Win8 ON\bin\Debug\Win8 ON.dll</HintPath>
+      <HintPath>..\Win8 ON\bin\Release\Win8 ON.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -271,28 +271,7 @@
     <None Include="Resources\RCT3plus.png" />
     <None Include="Resources\RCT3plus.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <PublishFile Include="RCT3启动器MessageBox">
-      <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Exclude</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>Assembly</FileType>
-    </PublishFile>
-    <PublishFile Include="Win8 ON">
-      <Visible>False</Visible>
-      <Group>
-      </Group>
-      <TargetPath>
-      </TargetPath>
-      <PublishState>Exclude</PublishState>
-      <IncludeHash>True</IncludeHash>
-      <FileType>Assembly</FileType>
-    </PublishFile>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,36 +1,33 @@
-﻿using System;
+﻿#define New_Game_Version
+
+using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Xml;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Net;
 using System.Drawing;
 using System.Reflection;
-using System.Collections;
 using System.Collections.Generic;
 using Win8_ON;
-using System.Diagnostics;
 
 namespace RCT3启动器
 {
     public partial class SettingForm : Form
     {
+#if New_Game_Version
+        string Game_Options_Path = "//Frontier//RCT3//Options.txt";
+        string Game_Exe_Name = "RCT3.exe";
+#else
+        string Game_Options_Path = Game_Options_Path;
+        string Game_Exe_Name = "RCT3plus.exe";
+#endif
+
         int X, Y;//游戏分辨率调整值
         private Button button;//全局button变量
         bool Click_Bool = false;//点击判断值
-        int Update_Check = 0;//更新判断
-        /*
-        对Update_Check的值的说明
-        0 - 默认状态
-        1 - 更新完成
-        2 - 当前版本已经是最新版本
-        */
-        string Update_Version = null;//存储服务器中的最新版本号
         delegate void SetText();//用来跨线程发送数据的委托
-        int Number;//“Number”控件的数值
         //在两个注释内申明Dll
         [DllImport("user32.dll")]
         public static extern bool SendMessage(IntPtr hwdn, int wMsg, int mParam, int lParam);
@@ -50,12 +47,12 @@ namespace RCT3启动器
             XmlNodeList Settings = Set.ChildNodes;
             foreach (XmlNode S in Settings)
             {
-                if (S.Attributes["id"].InnerText == "启动器设置")
+                if (S.Attributes["id"].InnerText == "0")
                 {
                     XmlNodeList QSettings = S.ChildNodes;
                     foreach (XmlNode AD in QSettings)
                     {
-                        if (AD.Attributes["id"].InnerText == "允许启动器在游戏启动期间驻留在后台")
+                        if (AD.Attributes["id"].InnerText == "1")
                         {
                             if (AD.InnerText == "True")
                             {
@@ -68,7 +65,7 @@ namespace RCT3启动器
                                 On1.Text = "关";
                             }
                         }
-                        if (AD.Attributes["id"].InnerText == "允许启动器收集您的配置信息以供分析")
+                        if (AD.Attributes["id"].InnerText == "2")
                         {
                             if (AD.InnerText == "True")
                             {
@@ -81,7 +78,7 @@ namespace RCT3启动器
                                 On2.Text = "关";
                             }
                         }
-                        if (AD.Attributes["id"].InnerText == "启动器对低配置系统优化")
+                        if (AD.Attributes["id"].InnerText == "3")
                         {
                             if (AD.InnerText == "True")
                             {
@@ -94,7 +91,7 @@ namespace RCT3启动器
                                 On3.Text = "关";
                             }
                         }
-                        if (AD.Attributes["id"].InnerText == "自动检查更新")
+                        if (AD.Attributes["id"].InnerText == "4")
                         {
                             if (AD.InnerText == "True")
                             {
@@ -107,18 +104,18 @@ namespace RCT3启动器
                                 On4.Text = "关";
                             }
                         }
-                        if (AD.Attributes["id"].InnerText == "游戏目录")
+                        if (AD.Attributes["id"].InnerText == "5")
                         {
                             Address.Text = AD.InnerText;
                         }
                     }
                 }
-                if (S.Attributes["id"].InnerText == "画面设置")
+                if (S.Attributes["id"].InnerText == "6")
                 {
                     XmlNodeList GSettings = S.ChildNodes;
                     foreach (XmlNode AD in GSettings)
                     {
-                        if (AD.Attributes["id"].InnerText == "游戏分辨率")
+                        if (AD.Attributes["id"].InnerText == "7")
                         {
                             if (AD.InnerText == "800*600")
                                 Resolution_Set.SelectedIndex = 0;
@@ -153,7 +150,7 @@ namespace RCT3启动器
                             if (AD.InnerText == "1920*1080")
                                 Resolution_Set.SelectedIndex = 15;
                         }
-                        if (AD.Attributes["id"].InnerText == "全屏幕")
+                        if (AD.Attributes["id"].InnerText == "8")
                         {
                             if (AD.InnerText == "True")
                             {
@@ -166,7 +163,20 @@ namespace RCT3启动器
                                 On5.Text = "关";
                             }
                         }
-                        if(AD.Attributes["id"].InnerText == "开启SweetFX")
+                        if (AD.Attributes["id"].InnerText == "10")
+                        {
+                            if (AD.InnerText == "True")
+                            {
+                                OnOff27.Checked = true;
+                                On27.Text = "开";
+                            }
+                            else
+                            {
+                                OnOff27.Checked = false;
+                                On27.Text = "关";
+                            }
+                        }
+                        if (AD.Attributes["id"].InnerText == "9")
                         {
                             if (AD.InnerText == "True" & File.Exists(MainForm.Value.Game_Address + "\\SweetFX_settings.txt"))
                             {
@@ -368,7 +378,6 @@ namespace RCT3启动器
                 FXSetting_Box.Visible = true;
                 QUpdate_Box.Visible = false;
                 About_Box.Visible = false;
-                Assembly a = Assembly.GetExecutingAssembly();
             }
             if (S.Name == "QUpdate")
             {
@@ -379,52 +388,7 @@ namespace RCT3启动器
                 QUpdate_Box.Visible = true;
                 About_Box.Visible = false;
                 //更新日志
-                UpdateNews.Text = DateTime.Now.ToString() + " - 提示：由于启动器更改了连接更新服务器的方式，在更新中途Windows防火墙可能会阻拦连接。请允许启动器连接到网络！";
-                UpdateNews.Text = UpdateNews.Text + Environment.NewLine + DateTime.Now.ToString() + " - 正在检查更新，请稍后....";
-                try
-                {
-                    StringBuilder result = new StringBuilder();
-                    FtpWebRequest FTP = (FtpWebRequest)FtpWebRequest.Create("ftp://ourhomevpn.asuscomm.com/UPDATE/RCT3Running/");
-                    FTP.UseBinary = true;
-                    FTP.Credentials = new NetworkCredential("RCT3Running", "A!0S@9D#8");
-                    FTP.Method = WebRequestMethods.Ftp.ListDirectory;
-                    WebResponse response = FTP.GetResponse();
-                    StreamReader reader = new StreamReader(response.GetResponseStream());
-                    string line = reader.ReadLine();
-                    while (line != null)
-                    {
-                        result.Append(line);
-                        result.Append("\n");
-                        line = reader.ReadLine();
-                    }
-                    result.Remove(result.ToString().LastIndexOf('\n'), 1);
-                    reader.Close();
-                    response.Close();
-                    string[] file = result.ToString().Split('\n');
-                    Regex n = new Regex(@"\d\D\d\D\d\D\d");
-                    foreach (string Update in file)
-                    {
-                        if (n.Match(Update).Value != "")
-                        {
-                            if (label8.Text != "V" + n.Match(Update).Value)
-                            {
-                                Update_Version = n.Match(Update).Value;
-                                UpdateNews.Text = UpdateNews.Text + Environment.NewLine + DateTime.Now.ToString() + " - 服务器中最新版本为V" + Update_Version;
-                            }
-                            else
-                            {
-                                UpdateNews.Text = UpdateNews.Text + Environment.NewLine + DateTime.Now.ToString() + " - 已经为最新版本！";
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    if (ex.Message == "无法解析此远程名称: 'ourhomevpn.asuscomm.com'")
-                        UpdateNews.Text = UpdateNews.Text + Environment.NewLine + DateTime.Now.ToString() + " - 连接服务器失败，错误信息：无法解析远程名称。";
-                    else
-                        UpdateNews.Text = UpdateNews.Text + Environment.NewLine + DateTime.Now.ToString() + " - 连接服务器失败，错误信息：" + ex.Message;
-                }
+                UpdateNews.Text = DateTime.Now.ToString() + " - 提示：启动器已经停止对更新的支持，新版本请关注过山车大亨3吧！";
             }
             if (S.Name == "About")
             {
@@ -561,7 +525,7 @@ namespace RCT3启动器
                 On1.Text = "关";
                 MainForm.Value.Started_Run = false;
             }
-            Update_Setting_Set("启动器设置", "允许启动器在游戏启动期间驻留在后台", OnOff1.Checked.ToString());
+            Update_Setting_Set("0", "1", OnOff1.Checked.ToString());
         }
 
         private void OnOff2_Click(object sender, EventArgs e)
@@ -570,7 +534,7 @@ namespace RCT3启动器
                 On2.Text = "开";
             else
                 On2.Text = "关";
-            Update_Setting_Set("启动器设置", "允许启动器收集您的配置信息以供分析", OnOff2.Checked.ToString());
+            Update_Setting_Set("0", "2", OnOff2.Checked.ToString());
         }
 
         private void OnOff3_Click(object sender, EventArgs e)
@@ -586,7 +550,7 @@ namespace RCT3启动器
                 On3.Text = "关";
             }
             MainForm.Value.AC.Focus();
-            Update_Setting_Set("启动器设置", "启动器对低配置系统优化", OnOff3.Checked.ToString());
+            Update_Setting_Set("0", "3", OnOff3.Checked.ToString());
         }
 
         private void OnOff4_Click(object sender, EventArgs e)
@@ -601,13 +565,13 @@ namespace RCT3启动器
                 On4.Text = "关";
                 MainForm.Value.Auto_Check_Update = false;
             }
-            Update_Setting_Set("启动器设置", "自动检查更新", OnOff4.Checked.ToString());
+            Update_Setting_Set("0", "4", OnOff4.Checked.ToString());
         }
 
         private void OnOff5_Click(object sender, EventArgs e)
         {
             bool old = OnOff5.Checked;
-            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "//Atari//RCT3//Options.txt"))
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Game_Options_Path))
             {
                 int S;
                 if (OnOff5.Checked == true)
@@ -621,14 +585,14 @@ namespace RCT3启动器
                     S = 0;
                 }
                 //更改Options.txt
-                FileStream Options = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "//Atari//RCT3//Options.txt", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                FileStream Options = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Game_Options_Path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                 StreamReader Option = new StreamReader(Options, Encoding.Default);
                 string Change = Option.ReadToEnd();
                 Regex r = new Regex(@"Fullscreen\s{1,}\d");
                 if (r.IsMatch(Change))
                 {
                     Change = r.Replace(Change, "Fullscreen " + S);
-                    StreamWriter New_Options = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "//Atari//RCT3//Options.txt", false, Encoding.Default);
+                    StreamWriter New_Options = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Game_Options_Path, false, Encoding.Default);
                     New_Options.Write(Change);
                     New_Options.Flush();
                     New_Options.Close();
@@ -636,14 +600,14 @@ namespace RCT3启动器
                 else
                 {
                     Change = Change + " Fullscreen " + S;
-                    StreamWriter New_Options = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "//Atari//RCT3//Options.txt", false, Encoding.Default);
+                    StreamWriter New_Options = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Game_Options_Path, false, Encoding.Default);
                     New_Options.Write(Change);
                     New_Options.Flush();
                     New_Options.Close();                    
                 }
                 Option.Close();
                 Options.Close();
-                Update_Setting_Set("画面设置", "全屏幕", OnOff5.Checked.ToString());
+                Update_Setting_Set("6", "8", OnOff5.Checked.ToString());
             }
             else
             {
@@ -654,7 +618,7 @@ namespace RCT3启动器
         private void OnOff27_Click(object sender, EventArgs e)
         {
             bool old = OnOff27.Checked;
-            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "//Atari//RCT3//Options.txt"))
+            if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Game_Options_Path))
             {
                 int S;
                 if (OnOff27.Checked == true)
@@ -668,14 +632,14 @@ namespace RCT3启动器
                     S = 0;
                 }
                 //更改Options.txt
-                FileStream Options = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "//Atari//RCT3//Options.txt", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                FileStream Options = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Game_Options_Path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                 StreamReader Option = new StreamReader(Options, Encoding.Default);
                 string Change = Option.ReadToEnd();
                 Regex r = new Regex(@"TrackAllowSameTrackIntersect\s{1,}\d");
                 if (r.IsMatch(Change))
                 {
                     Change = r.Replace(Change, "TrackAllowSameTrackIntersect " + S);
-                    StreamWriter New_Options = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "//Atari//RCT3//Options.txt", false, Encoding.Default);
+                    StreamWriter New_Options = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Game_Options_Path, false, Encoding.Default);
                     New_Options.Write(Change);
                     New_Options.Flush();
                     New_Options.Close();
@@ -683,14 +647,14 @@ namespace RCT3启动器
                 else
                 {
                     Change = Change + " TrackAllowSameTrackIntersect " + S;
-                    StreamWriter New_Options = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "//Atari//RCT3//Options.txt", false, Encoding.Default);
+                    StreamWriter New_Options = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Game_Options_Path, false, Encoding.Default);
                     New_Options.Write(Change);
                     New_Options.Flush();
                     New_Options.Close();
                 }
                 Option.Close();
                 Options.Close();
-                Update_Setting_Set("画面设置", "轨道重叠", OnOff27.Checked.ToString());
+                Update_Setting_Set("6", "10", OnOff27.Checked.ToString());
             }
             else
             {
@@ -951,7 +915,7 @@ namespace RCT3启动器
                     }
                 }
             }
-            Update_Setting_Set("画面设置", "开启SweetFX", OnOff6.Checked.ToString());
+            Update_Setting_Set("6", "9", OnOff6.Checked.ToString());
         }
 
         public static void CopyStream(Stream i, Stream o)
@@ -1345,7 +1309,7 @@ namespace RCT3启动器
         {
             FolderBrowserDialog Game = new FolderBrowserDialog();
             Game.ShowDialog();       
-            if (!File.Exists(Game.SelectedPath + "//RCT3plus.exe"))
+            if (!File.Exists(Game.SelectedPath + "//" + Game_Exe_Name))
             {
                 MessageBox.Show("请选择正确的游戏目录！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
@@ -1359,12 +1323,12 @@ namespace RCT3启动器
                 XmlNodeList Settings = Set.ChildNodes;
                 foreach (XmlNode QS in Settings)
                 {
-                    if (QS.Attributes["id"].InnerText == "启动器设置")
+                    if (QS.Attributes["id"].InnerText == "0")
                     {
                         XmlNodeList QSettings = QS.ChildNodes;
                         foreach (XmlNode AD in QSettings)
                         {
-                            if (AD.Attributes["id"].InnerText == "游戏目录")
+                            if (AD.Attributes["id"].InnerText == "5")
                             {
                                 AD.InnerText = MainForm.Value.Game_Address;
                             }
@@ -1444,16 +1408,16 @@ namespace RCT3启动器
                         break;
                 }
                 //更改Options.txt
-                if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "//Atari//RCT3//Options.txt"))//Setting窗体一运行就会进行检测，无需再写
+                if (File.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Game_Options_Path))//Setting窗体一运行就会进行检测，无需再写
                 {
-                    FileStream Options = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "//Atari//RCT3//Options.txt", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                    FileStream Options = new FileStream(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Game_Options_Path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                     StreamReader Option = new StreamReader(Options, Encoding.Default);
                     String Change = Option.ReadToEnd();
                     Regex r = new Regex(@"Resolution \d*? \d*");
                     if (r.IsMatch(Change))
                     {
                         Change = r.Replace(Change, "Resolution " + X + " " + Y);
-                        StreamWriter New_Options = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "//Atari//RCT3//Options.txt", false, Encoding.Default);
+                        StreamWriter New_Options = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Game_Options_Path, false, Encoding.Default);
                         New_Options.Write(Change);
                         New_Options.Flush();
                         New_Options.Close();
@@ -1461,7 +1425,7 @@ namespace RCT3启动器
                     else
                     {
                         Change = Change + "Resolution " + X + " " + Y;
-                        StreamWriter New_Options = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "//Atari//RCT3//Options.txt", false, Encoding.Default);
+                        StreamWriter New_Options = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Game_Options_Path, false, Encoding.Default);
                         New_Options.Write(Change);
                         New_Options.Flush();
                         New_Options.Close();
@@ -1475,12 +1439,12 @@ namespace RCT3启动器
                     XmlNodeList Settings = Set.ChildNodes;
                     foreach (XmlNode GS in Settings)
                     {
-                        if (GS.Attributes["id"].InnerText == "画面设置")
+                        if (GS.Attributes["id"].InnerText == "6")
                         {
                             XmlNodeList GSettings = GS.ChildNodes;
                             foreach (XmlNode AD in GSettings)
                             {
-                                if (AD.Attributes["id"].InnerText == "游戏分辨率")
+                                if (AD.Attributes["id"].InnerText == "7")
                                 {
                                     AD.InnerText = X + "*" + Y;
                                 }
@@ -1491,144 +1455,11 @@ namespace RCT3启动器
                 }
                 else
                 {
-                    MessageBox.Show("请检查Options.txt文件是否存在！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("请检查Options.txt文件是否存在！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Resolution_Set.SelectedIndex = old;
                 }
-
             }
         }//更改分辨率
-
-        private void UpdateButton_Click(object sender, EventArgs e)
-        {
-            UpdateButton.Enabled = false;
-            UpdateNews.Text = UpdateNews.Text + Environment.NewLine + DateTime.Now.ToString() + " - 正在检查更新，请稍后....";
-            Thread DownLoad_File = new Thread(DownLoad);
-            DownLoad_File.Start();
-            Update_Checked.Start();
-        }//更新按钮
-
-        private void Update_Checked_Tick(object sender, EventArgs e)
-        {
-            if (Update_Check == 1)
-            {
-                UpdateNews.Text = UpdateNews.Text + Environment.NewLine + DateTime.Now.ToString() + " - 下载完成，最新版本号为：V" + Update_Version + "！即将开始更新，请等待......";
-                Update_Check = 0;
-                UpdateButton.Enabled = true;
-                //启动更新程序
-                Process New = new Process();
-                New.StartInfo.FileName = Environment.CurrentDirectory + "//Update.exe";
-                New.StartInfo.Verb = "runas";//以管理员身份启动
-                New.Start();
-                //启动更新程序
-                Update_Checked.Stop();
-            }
-            if (Update_Check == 2)
-            {
-                UpdateNews.Text = UpdateNews.Text + Environment.NewLine + DateTime.Now.ToString() + " - 已经为最新版本！";
-                Update_Check = 0;
-                UpdateButton.Enabled = true;
-                Update_Checked.Stop();
-            }
-        }//检测更新状态
-
-        private void FTP_Download(string FileName,string url)
-        {
-            int bufferSize = 2048;
-            FileStream outputStream = new FileStream(FileName, FileMode.Create);
-            FtpWebRequest reqFTP;
-            reqFTP = (FtpWebRequest)FtpWebRequest.Create(new Uri(url));
-            reqFTP.Credentials = new NetworkCredential("RCT3Running", "A!0S@9D#8");
-            reqFTP.Method = WebRequestMethods.Ftp.DownloadFile;
-            reqFTP.UseBinary = true;
-            reqFTP.UsePassive = false;
-            FtpWebResponse response = (FtpWebResponse)reqFTP.GetResponse();
-            Stream ftpStream = response.GetResponseStream();
-            int readCount;
-            byte[] buffer = new byte[bufferSize];
-            readCount = ftpStream.Read(buffer, 0, bufferSize);
-            while (readCount > 0)
-            {
-                outputStream.Write(buffer, 0, readCount);
-                readCount = ftpStream.Read(buffer, 0, bufferSize);
-            }
-            ftpStream.Close();
-            outputStream.Close();
-            response.Close();
-        }//文件下载
-
-        private void DownLoad()
-        {
-            StringBuilder result = new StringBuilder();
-            try
-            {
-                FtpWebRequest FTP = (FtpWebRequest)FtpWebRequest.Create("ftp://ourhomevpn.asuscomm.com/UPDATE/RCT3Running/");
-                FTP.UseBinary = true;
-                FTP.Credentials = new NetworkCredential("RCT3Running", "A!0S@9D#8");
-                FTP.Method = WebRequestMethods.Ftp.ListDirectory;
-                WebResponse response = FTP.GetResponse();
-                StreamReader reader = new StreamReader(response.GetResponseStream());
-                string line = reader.ReadLine();
-                while (line != null)
-                {
-                    result.Append(line);
-                    result.Append("\n");
-                    line = reader.ReadLine();
-                }
-                result.Remove(result.ToString().LastIndexOf('\n'), 1);
-                reader.Close();
-                response.Close();
-                string[] file = result.ToString().Split('\n');
-                Regex n = new Regex(@"\d\D\d\D\d\D\d");
-                foreach (string Update in file)
-                {
-                    if (n.Match(Update).Value != "")
-                    {
-                        if (label8.Text != "V" + n.Match(Update).Value)
-                        {
-                            try
-                            {
-                                string fileName1 = "RCT3启动器V" + n.Match(Update).Value + ".exe_";
-                                string fileName2 = "RCT3启动器MessageBox.dll_";
-                                string fileName3 = "Win8 ON.dll_";
-                                string url1 = "ftp://ourhomevpn.asuscomm.com/UPDATE/RCT3Running/RCT3启动器V" + n.Match(Update).Value + ".exe";
-                                string url2 = "ftp://ourhomevpn.asuscomm.com/UPDATE/RCT3Running/RCT3启动器MessageBox.dll";
-                                string url3 = "ftp://ourhomevpn.asuscomm.com/UPDATE/RCT3Running/Win8 ON.dll";
-                                FTP_Download(fileName1, url1);
-                                FTP_Download(fileName2, url2);
-                                FTP_Download(fileName3, url3);
-                                Assembly a = Assembly.GetExecutingAssembly();
-                                CopyStream(a.GetManifestResourceStream("RCT3启动器.Resources.Update.exe"), File.Open("Update.exe", FileMode.Create));
-                                Update_Check = 1;
-                            }
-                            catch (Exception ex)
-                            {
-                                SetText settext = delegate ()
-                                {
-                                    UpdateNews.Text = UpdateNews.Text + Environment.NewLine + DateTime.Now.ToString() + " - 下载文件失败，错误信息：" + ex.Message;
-                                };
-                                this.UpdateNews.Invoke(settext);
-                            }
-                        }
-                        else
-                        {
-                            Update_Check = 2;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                SetText settext = delegate ()
-                {
-                    if (ex.Message == "无法解析此远程名称: 'ourhomevpn.asuscomm.com'")
-                        UpdateNews.Text = UpdateNews.Text + Environment.NewLine + DateTime.Now.ToString() + " - 连接服务器失败，错误信息：无法解析远程名称。";
-                    else
-                        UpdateNews.Text = UpdateNews.Text + Environment.NewLine + DateTime.Now.ToString() + " - 连接服务器失败，错误信息：" + ex.Message;
-                };
-                this.UpdateNews.Invoke(settext);
-                UpdateButton.Enabled = true;
-            }
-        }//更新
 
         private Control FindControl(string ControlName)
         {
@@ -2130,18 +1961,17 @@ namespace RCT3启动器
                                     }
                                     else
                                     {
-                                        if (FindControl(x) is TrackBar)
-                                        {
-                                            TrackBar n = (TrackBar)FindControl(x);
-                                            n.Value = Double_To_ScrollValue(S[0]);
-                                            //最小值的处理
-                                            if (n.Minimum == Double_To_ScrollValue(S[0]))
-                                            {
-                                                n.Value = n.Maximum;
-                                                n.Value = n.Minimum;
-                                            }
-                                        }
-                                    }
+										if (FindControl(x) is TrackBar n)
+										{
+											n.Value = Double_To_ScrollValue(S[0]);
+											//最小值的处理
+											if (n.Minimum == Double_To_ScrollValue(S[0]))
+											{
+												n.Value = n.Maximum;
+												n.Value = n.Minimum;
+											}
+										}
+									}
                                 }
                                 if (x.StartsWith("USE") & (x != "USE_FXAA_ANTIALIASING"))
                                 {
@@ -2170,13 +2000,13 @@ namespace RCT3启动器
 
         private int Double_To_ScrollValue(string d)
         {
-            int n = 0;
+			int n;
             string re = null;
             //转换数值
             Regex Number = new Regex(@"\d");
             foreach(Match x in Number.Matches(d))
             {
-                re = re + x.Value;
+                re += x.Value;
             }
             if (re.StartsWith("0") | re.EndsWith("0"))
             {
