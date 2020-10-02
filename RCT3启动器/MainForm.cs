@@ -364,7 +364,6 @@ namespace RCT3启动器
 						CRepair.Image = null;
 						SavesFileName = CunDang.FileName;
 					}
-					CunDang.Dispose();
 				}
 				else
 				{
